@@ -1,3 +1,4 @@
+/*abolished file, new file attached is pwm_moter.ino*/
 #define PWMA 10
 
 #define PWMB 9
