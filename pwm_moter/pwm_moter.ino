@@ -1,11 +1,4 @@
-#define AIN1 12   //TB6612FNG驱动模块控制信号 共6个
-#define AIN2 13
 
-#define BIN1 7
-#define BIN2 6
-
-#define PWMA 10
-#define PWMB 9
 uint8_t PWMValA=100;
 uint8_t PWMValB=100;
 #include "GetSpeed.h"
@@ -14,66 +7,6 @@ A是右轮
 B是左轮更弱
 */
 
-void Azheng(){
-  digitalWrite(AIN1, 1);         
-  digitalWrite(AIN2, 0);        
-  //analogWrite(PWMA, PWMVal); 
-}
-
-void Afan(){
-  digitalWrite(AIN1, 0);         
-  digitalWrite(AIN2, 1);         
-  //analogWrite(PWMA, PWMVal); 
-}
-
-void Astop(){
-  digitalWrite(AIN1, 1);
-  digitalWrite(AIN2, 1);
-  //analogWrite(PWMA, PWMVal);
-}
-
-void Bzheng(){
-  digitalWrite(BIN1, 0);        
-  digitalWrite(BIN2, 1);  
-  //analogWrite(PWMB, PWMVal);
-}
-
-void Bfan(){
-  digitalWrite(BIN1, 1);        
-  digitalWrite(BIN2, 0);  
-  //analogWrite(PWMB, PWMVal);
-}
-
-void Bstop(){
-  digitalWrite(BIN1, 1);        
-  digitalWrite(BIN2, 1);  
-  //analogWrite(PWMB, PWMVal); 
-}
-
-void forward1(){
-  void Azheng();
-  void Bzheng();
-}
-
-void back1(){
-  void Afan();
-  void Bfan();
-}
-
-void left1(){
-  void Azheng();
-  void Bstop();
-}
-
-void right1(){
-  void Astop();
-  void Bzheng();
-}
-
-void stop(){
-  void Astop();
-  void Bstop();
-}
 
 
 void setup() {
@@ -84,7 +17,9 @@ void setup() {
   pinMode(BIN2, OUTPUT);
   pinMode(PWMA, OUTPUT);
   pinMode(PWMB, OUTPUT); 
+  setupSpeedTest();
   Serial.begin(9600);
+  //TODO: modulize the initilization of the motor
 }
 /*
 [REC]119 w
@@ -145,23 +80,15 @@ void loop() {
       analogWrite(PWMA, PWMValA); 
       analogWrite(PWMB, PWMValB); 
     }
-    unsigned long leftFrequency = get_speed_left();
-    Serial.print("leftFrequency:");
-    Serial.print(leftFrequency);
-    Serial.println("");
-    unsigned long rightFrequency = get_speed_right();
-    Serial.print("rightFrequency:");
-    Serial.println(rightFrequency);
-    Serial.println("");
     if(leftFrequency>rightFrequency){
       Azheng();
       Bzheng();
-      PWMValA = PWMValA*leftFrequency/rightFrequency;//the right wheel will be faster, as the PWMA multiplies a factor
+      PWMValA = (PWMValA*(leftFrequency+1)/(rightFrequency+1))%255;//the right wheel will be faster, as the PWMA multiplies a factor
   } 
     else if(leftFrequency<rightFrequency){
       Azheng();
       Bzheng();
-      PWMValB += PWMValB*rightFrequency/leftFrequency;
+      PWMValB = (PWMValB*(rightFrequency+1)/(leftFrequency+1))%255;
     }
-}
+ }
 }
