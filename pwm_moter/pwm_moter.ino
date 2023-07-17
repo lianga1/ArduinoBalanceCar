@@ -1,7 +1,8 @@
 
-uint8_t PWMValA=100;
-uint8_t PWMValB=100;
-#include "GetSpeed.h"
+uint8_t LeftSpeed=100;
+uint8_t RightSpeed=100;
+#include "SpeedModify.h"
+#include "move.h"
 /*
 A是右轮
 B是左轮更弱
@@ -11,13 +12,8 @@ B是左轮更弱
 
 void setup() {
   // put your setup code here, to run once:
-  pinMode(AIN1, OUTPUT);
-  pinMode(AIN2, OUTPUT); 
-  pinMode(BIN1, OUTPUT); 
-  pinMode(BIN2, OUTPUT);
-  pinMode(PWMA, OUTPUT);
-  pinMode(PWMB, OUTPUT); 
-  setupSpeedTest();
+  motorInit();
+  //setupSpeedTest();
   Serial.begin(9600);
   //TODO: modulize the initilization of the motor
 }
@@ -41,54 +37,40 @@ void loop() {
   int Receive_Data;
   while(Serial.available()){
     int inByte = Serial.read();
+    int direction;
+    int speed = 25;
     //Receive_Data = (char)inByte;
     Receive_Data = inByte;
     Serial.println(Receive_Data);
     //if (Receive_Data==(char)'w'){
-    if (Receive_Data==119){
-      //Serial.println(Receive_Data);
-      Azheng();
-      Bzheng();
-      analogWrite(PWMA, PWMValA); 
-      analogWrite(PWMB, PWMValB); 
-    //}else if(Receive_Data==(char)'s'){
-    }else if(Receive_Data==115){
-      //Serial.println(Receive_Data);
-      Afan();
-      Bfan();
-      analogWrite(PWMA, PWMValA); 
-      analogWrite(PWMB, PWMValB); 
-  //}else if(Receive_Data==(char)'d'){  
-    }else if(Receive_Data==100){
-
-      //Serial.println(Receive_Data);
-      Azheng();
-      Bstop();
-      analogWrite(PWMA, PWMValA); 
-      analogWrite(PWMB, PWMValB); 
-    
-    //}else if(Receive_Data==(char)'a'){
-    }else if(Receive_Data==97){
-      //Serial.println(Receive_Data);
-      Astop();
-      Bzheng();
-      analogWrite(PWMA, PWMValA); 
-      analogWrite(PWMB, PWMValB); 
-    }else{
-      Serial.println(Receive_Data);
-      stop();
-      analogWrite(PWMA, PWMValA); 
-      analogWrite(PWMB, PWMValB); 
+   if(Receive_Data>50){
+    switch (Receive_Data)
+    {
+    case 119/* constant-expression */:
+      direction = 0;
+      /* forward:input w */
+      break;
+    case 115:
+      direction = 1;
+      /* backward input s */
+      break;
+    case 100:
+      direction = 3;
+      /* right: input d */
+      break;
+    case 97:
+      direction = 2;
+      /* right: input a */
+      break;
+    default:
+      Serial.println("wrong input");
+      break;
     }
-    if(leftFrequency>rightFrequency){
-      Azheng();
-      Bzheng();
-      PWMValA = (PWMValA*(leftFrequency+1)/(rightFrequency+1))%255;//the right wheel will be faster, as the PWMA multiplies a factor
-  } 
-    else if(leftFrequency<rightFrequency){
-      Azheng();
-      Bzheng();
-      PWMValB = (PWMValB*(rightFrequency+1)/(leftFrequency+1))%255;
-    }
+ 
+   }
+   else{
+      speed = Receive_Data;
+   }
+   move(direction,speed,0);//move the car with the direction and speed forever
  }
 }
