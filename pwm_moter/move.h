@@ -36,7 +36,11 @@ Description: a move function
 @param: time: 0~255,if time=0, then move forever
 */
 void move(uint8_t direction,uint8_t speed, uint8_t time){
-    speed = (speed*27)%255;
+    if (speed ==0){
+        stop();
+        return;
+    }
+    speed = 90 + speed*10;
     switch(direction){
         case 0:
             forward(speed);

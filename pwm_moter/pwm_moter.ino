@@ -12,7 +12,7 @@ B是左轮更弱
 
 void setup() {
   // put your setup code here, to run once:
-  //setupSpeedTest();
+  setupSpeedTest();
   Serial.begin(9600);
   motorInit();
   //TODO: modulize the initilization of the motor
@@ -35,8 +35,11 @@ void loop() {
   // put your main code here, to run repeatedly:  
   //static unsigned char Receive_Data;
   int Receive_Data;
+  unsigned long currentTime,startTime;
+
 
   while(Serial.available()){
+    checkCurrentSpeed();
     int inByte = Serial.read();
     int direction;
     int speed = 4;

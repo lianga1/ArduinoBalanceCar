@@ -2,9 +2,11 @@
 #define GETSPEED_H
 volatile unsigned long rightCount = 0;
 volatile unsigned long leftCount = 0;
-volatile unsigned long rightFrequency = 0;
-volatile unsigned long leftFrequency = 0;
-unsigned long lastTime = 0;
+volatile unsigned long rightSpeed = 0;
+volatile unsigned long leftSpeed = 0;
+unsigned long currentTime = 0;
+unsigned long startTime = 0;
+unsigned long DisplayTime = 0;
 #define LEFTSPD 2
 #define RIGHTSPD 3
 
@@ -14,22 +16,32 @@ unsigned long lastTime = 0;
 #define PULSES_PER_REVOLUTION 585
 
 
-ISR(TIMER1_COMPA_vect) {
-  // 访问脉冲数量并清零
-  leftFrequency = leftCount*100;
-  leftCount = 0;
-  rightFrequency = rightCount*100;
-  rightCount = 0;
-  // 计算脉冲频率
-  uint8_t leftSpeed = leftFrequency *
+void checkCurrentSpeed(){
+  currentTime = millis();
+  
+  if(currentTime - startTime > 40){
+    int timeDelta = currentTime - startTime;
+    unsigned long leftFrequency = leftCount/timeDelta *1000;
+    unsigned long rightFrequency = rightCount/timeDelta *1000;
+    int revolsPerSecLeft = leftFrequency/PULSES_PER_REVOLUTION;
+    int revolsPerSecRight = rightFrequency/PULSES_PER_REVOLUTION;
+    leftSpeed = revolsPerSecLeft * PI * WHEEL_DIAMETER;
+    rightSpeed = revolsPerSecRight * PI * WHEEL_DIAMETER;
+    /*centimeter per second*/
+    leftCount = 0;
+    rightCount = 0;
+    if(currentTime - DisplayTime > 1000){
+      Serial.print("left speed: ");
+      Serial.print(leftSpeed);
+      Serial.println(" cm/s");
+      Serial.print("right speed: ");
+      Serial.print(rightSpeed);
+      Serial.println(" cm/s");
+      DisplayTime = currentTime;
+    }
+    startTime = currentTime;
+  }
 
-  // 在这里可以对脉冲频率进行处理或输出
-  Serial.print("LSpeed: ");
-  Serial.print(leftFrequency);
-  Serial.println(" Hz");
-  Serial.print("RFrequency: ");
-  Serial.print(rightFrequency);
-  Serial.println(" Hz");
 
 }
 
@@ -46,18 +58,6 @@ void setupSpeedTest() {
   pinMode(RIGHTSPD, INPUT);
   attachInterrupt(digitalPinToInterrupt(LEFTSPD), countLeftPulses, RISING);
   attachInterrupt(digitalPinToInterrupt(RIGHTSPD), countRightPulses, RISING);
-  cli();
-  // 设置定时器1
-  TCCR1A = 0; // set entire TCCR1A register to 0
-  TCCR1B = 0; // same for TCCR1B
-  TCNT1  = 0; // initialize counter value to 0
-  // 设置比较寄存器
-  OCR1A = 15624; // = 16000000 / (1 * 1024) - 1 (must be <65536)
-  // 设置预分频器
-  TCCR1B |= (1 << CS10); // no prescaler
-  TCCR1B |= (1 << CS12); // 1024 prescaler
-  // 启用比较A匹配中断
-  TIMSK1 |= (1 << OCIE1A);
-  sei();
+  startTime = currentTime = DisplayTime= millis();
 }
 #endif
