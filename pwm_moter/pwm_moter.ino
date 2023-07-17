@@ -8,7 +8,7 @@
 #define PWMB 9
 uint8_t PWMValA=100;
 uint8_t PWMValB=100;
-#include "GetSpeed.ino"
+#include "GetSpeed.h"
 /*
 A是右轮
 B是左轮更弱
@@ -163,4 +163,5 @@ void loop() {
       Bzheng();
       PWMValB += PWMValB*rightFrequency/leftFrequency;
     }
+}
 }
