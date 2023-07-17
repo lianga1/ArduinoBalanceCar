@@ -3,10 +3,10 @@
 #include <stdint.h>
 #define PWMLeft 9
 #define PWMRight 10
-#define LeftIn1 7
-#define LeftIn2 6
-#define RightIn1 12
-#define RightIn2 13
+#define RightIn1 7
+#define RightIn2 6
+#define LeftIn1 12
+#define LeftIn2 13
 
 #define HIGH 1
 #define LOW 0
@@ -14,8 +14,8 @@
 //definations of the fuctions to control the motors
 #define LeftForward() digitalWrite(LeftIn1,HIGH);digitalWrite(LeftIn2,LOW)
 #define LeftBackward() digitalWrite(LeftIn1,LOW);digitalWrite(LeftIn2,HIGH)
-#define RightForward() digitalWrite(RightIn1,HIGH);digitalWrite(RightIn2,LOW)
-#define RightBackward() digitalWrite(RightIn1,LOW);digitalWrite(RightIn2,HIGH)
+#define RightForward() digitalWrite(RightIn1,LOW);digitalWrite(RightIn2,HIGH)
+#define RightBackward() digitalWrite(RightIn1,HIGH);digitalWrite(RightIn2,LOW)
 #define LeftStop() digitalWrite(LeftIn1,LOW);digitalWrite(LeftIn2,LOW)
 #define RightStop() digitalWrite(RightIn1,LOW);digitalWrite(RightIn2,LOW)
 //definations of the fuctions to control the car
@@ -36,7 +36,7 @@ Description: a move function
 @param: time: 0~255,if time=0, then move forever
 */
 void move(uint8_t direction,uint8_t speed, uint8_t time){
-    speed = (speed*5)%255;
+    speed = (speed*27)%255;
     switch(direction){
         case 0:
             forward(speed);

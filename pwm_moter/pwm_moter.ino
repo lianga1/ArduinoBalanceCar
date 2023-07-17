@@ -12,9 +12,9 @@ B是左轮更弱
 
 void setup() {
   // put your setup code here, to run once:
-  motorInit();
   //setupSpeedTest();
   Serial.begin(9600);
+  motorInit();
   //TODO: modulize the initilization of the motor
 }
 /*
@@ -35,15 +35,16 @@ void loop() {
   // put your main code here, to run repeatedly:  
   //static unsigned char Receive_Data;
   int Receive_Data;
+
   while(Serial.available()){
     int inByte = Serial.read();
     int direction;
-    int speed = 25;
+    int speed = 4;
     //Receive_Data = (char)inByte;
     Receive_Data = inByte;
     Serial.println(Receive_Data);
     //if (Receive_Data==(char)'w'){
-   if(Receive_Data>50){
+   if(Receive_Data>90){
     switch (Receive_Data)
     {
     case 119/* constant-expression */:
@@ -68,8 +69,8 @@ void loop() {
     }
  
    }
-   else{
-      speed = Receive_Data;
+   else if(Receive_Data>48 && Receive_Data<58){
+      speed = Receive_Data-49;
    }
    move(direction,speed,0);//move the car with the direction and speed forever
  }
