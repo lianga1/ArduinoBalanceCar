@@ -6,6 +6,7 @@ unsigned long lastTime = 0;
 unsigned long get_speed_left(){
     pinMode(LEFTSPD, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(LEFTSPD), countLeftPulses, RISING);
+    leftCount = 0;
     unsigned long currentTime = lastTime = millis();
     while (currentTime - lastTime < 40) {
       currentTime = millis();
@@ -18,6 +19,7 @@ unsigned long get_speed_left(){
 unsigned long get_speed_right(){
     pinMode(RIGHTSPD, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(RIGHTSPD), countRightPulses, RISING);
+    rightCount = 0;
     unsigned long currentTime = lastTime = millis();
     while (currentTime - lastTime < 40) {
       currentTime = millis();

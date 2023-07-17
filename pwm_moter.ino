@@ -6,9 +6,9 @@
 
 #define PWMA 10
 #define PWMB 9
-#define PWMValA 200
-#define PWMValB 100
-
+uint8_t PWMValA=100;
+uint8_t PWMValB=100;
+#include "GetSpeed.ino"
 /*
 A是右轮
 B是左轮更弱
@@ -145,5 +145,22 @@ void loop() {
       analogWrite(PWMA, PWMValA); 
       analogWrite(PWMB, PWMValB); 
     }
+    unsigned long leftFrequency = get_speed_left();
+    Serial.print("leftFrequency:");
+    Serial.print(leftFrequency);
+    Serial.println("");
+    unsigned long rightFrequency = get_speed_right();
+    Serial.print("rightFrequency:");
+    Serial.println(rightFrequency);
+    Serial.println("");
+    if(leftFrequency>rightFrequency){
+      Azheng();
+      Bzheng();
+      PWMValA = PWMValA*leftFrequency/rightFrequency;//the right wheel will be faster, as the PWMA multiplies a factor
   } 
+    else if(leftFrequency<rightFrequency){
+      Azheng();
+      Bzheng();
+      PWMValB += PWMValB*rightFrequency/leftFrequency;
+    }
 }
