@@ -1,12 +1,17 @@
 #ifndef GETSPEED_H
 #define GETSPEED_H
+#include <MsTimer2.h>
+
+#include <PinChangeInterrupt.h>
+#include <PinChangeInterruptBoards.h>
+#include <PinChangeInterruptPins.h>
+#include <PinChangeInterruptSettings.h>
+
+
 volatile unsigned long rightCount = 0;
 volatile unsigned long leftCount = 0;
 volatile unsigned long rightSpeed = 0;
 volatile unsigned long leftSpeed = 0;
-unsigned long currentTime = 0;
-unsigned long startTime = 0;
-unsigned long DisplayTime = 0;
 #define LEFTSPD 2
 #define RIGHTSPD 3
 
@@ -15,35 +20,25 @@ unsigned long DisplayTime = 0;
 #define PI 3
 #define PULSES_PER_REVOLUTION 585
 
-
-void checkCurrentSpeed(){
-  currentTime = millis();
-  
-  if(currentTime - startTime > 40){
-    int timeDelta = currentTime - startTime;
-    unsigned long leftFrequency = leftCount/timeDelta *1000;
-    unsigned long rightFrequency = rightCount/timeDelta *1000;
-    int revolsPerSecLeft = leftFrequency/PULSES_PER_REVOLUTION;
-    int revolsPerSecRight = rightFrequency/PULSES_PER_REVOLUTION;
-    leftSpeed = revolsPerSecLeft * PI * WHEEL_DIAMETER;
-    rightSpeed = revolsPerSecRight * PI * WHEEL_DIAMETER;
-    /*centimeter per second*/
-    leftCount = 0;
-    rightCount = 0;
-    if(currentTime - DisplayTime > 1000){
-      Serial.print("left speed: ");
-      Serial.print(leftSpeed);
-      Serial.println(" cm/s");
-      Serial.print("right speed: ");
-      Serial.print(rightSpeed);
-      Serial.println(" cm/s");
-      DisplayTime = currentTime;
-    }
-    startTime = currentTime;
-  }
-
+void getSpeed()
+{
+  rightSpeed = rightCount*10/PULSES_PER_REVOLUTION*PI*WHEEL_DIAMETER;
+  leftSpeed = leftCount*10/PULSES_PER_REVOLUTION*PI*WHEEL_DIAMETER;
+  rightCount = 0;
+  leftCount = 0;
+  Serial.print("leftSpeed:");
+  Serial.print(leftSpeed);
+  Serial.println("cm/s");
+  Serial.print("rightSpeed:");
+  Serial.print(rightSpeed);
+  Serial.println("cm/s");
+  Serial.print("leftCount:");
+  Serial.println(leftCount);
+  Serial.print("rightCount:");
+  Serial.println(rightCount);
 
 }
+
 
 void countLeftPulses() {
   leftCount++;
@@ -56,8 +51,11 @@ void countRightPulses() {
 void setupSpeedTest() {
   pinMode(LEFTSPD, INPUT);
   pinMode(RIGHTSPD, INPUT);
-  attachInterrupt(digitalPinToInterrupt(LEFTSPD), countLeftPulses, RISING);
-  attachInterrupt(digitalPinToInterrupt(RIGHTSPD), countRightPulses, RISING);
-  startTime = currentTime = DisplayTime= millis();
+  attachPCINT(digitalPinToPCINT(RIGHTSPD), countRightPulses, RISING);
+  attachPCINT(digitalPinToPCINT(LEFTSPD), countLeftPulses, RISING);
+
+  
+  // MsTimer2::set(100, getSpeed);//set the timer interrupt, 100ms
+  // MsTimer2::start();//start the timer
 }
 #endif

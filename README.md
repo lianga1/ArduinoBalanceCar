@@ -3,7 +3,7 @@ an balance dual-wheel car driven by arduino uno
 # Current Progress
 ## Modules
 - [x] Motor Driver
-- [ ] Speed Monitor
+- [x] Speed Monitor
 - [ ] UART Communication
 - [ ] Bluetooth Controller
 ## Motor Driver
