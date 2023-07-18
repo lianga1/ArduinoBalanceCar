@@ -22,20 +22,17 @@ volatile unsigned long leftSpeed = 0;
 
 void getSpeed()
 {
-  rightSpeed = rightCount*10/PULSES_PER_REVOLUTION*PI*WHEEL_DIAMETER;
-  leftSpeed = leftCount*10/PULSES_PER_REVOLUTION*PI*WHEEL_DIAMETER;
+  // rightSpeed = rightCount*10/PULSES_PER_REVOLUTION*PI*WHEEL_DIAMETER;
+  // leftSpeed = leftCount*10/PULSES_PER_REVOLUTION*PI*WHEEL_DIAMETER;
+
+  Serial.print("leftSpeed:");
+  Serial.print(leftCount);
+  Serial.println("pulses");
+  Serial.print("rightSpeed:");
+  Serial.print(rightCount);
+  Serial.println("pulses");
   rightCount = 0;
   leftCount = 0;
-  Serial.print("leftSpeed:");
-  Serial.print(leftSpeed);
-  Serial.println("cm/s");
-  Serial.print("rightSpeed:");
-  Serial.print(rightSpeed);
-  Serial.println("cm/s");
-  Serial.print("leftCount:");
-  Serial.println(leftCount);
-  Serial.print("rightCount:");
-  Serial.println(rightCount);
 
 }
 
@@ -51,11 +48,12 @@ void countRightPulses() {
 void setupSpeedTest() {
   pinMode(LEFTSPD, INPUT);
   pinMode(RIGHTSPD, INPUT);
-  attachPCINT(digitalPinToPCINT(RIGHTSPD), countRightPulses, RISING);
-  attachPCINT(digitalPinToPCINT(LEFTSPD), countLeftPulses, RISING);
-
   
-  // MsTimer2::set(100, getSpeed);//set the timer interrupt, 100ms
-  // MsTimer2::start();//start the timer
+   MsTimer2::set(100, getSpeed);//set the timer interrupt, 100ms
+   MsTimer2::start();//start the timer
+  attachInterrupt(digitalPinToInterrupt(LEFTSPD), countLeftPulses, RISING);
+  attachInterrupt(digitalPinToInterrupt(RIGHTSPD), countRightPulses, RISING);
+
 }
+
 #endif
