@@ -12,6 +12,8 @@ void PID_setup()
 {
     myPIDLeft.SetMode(AUTOMATIC);
     myPIDRight.SetMode(AUTOMATIC);
+    myPIDLeft.SetSampleTime(10);
+    myPIDRight.SetSampleTime(10);
     myPIDLeft.SetOutputLimits(0, 255);
     myPIDRight.SetOutputLimits(0, 255);
 }
@@ -26,6 +28,6 @@ void adjustSpeed()
     myPIDLeft.Compute();
 
     // 输出到PWM
-    analogWrite(9, OutputRight);
-    analogWrite(10, OutputLeft);
+    analogWrite(9, (uint8_t)OutputRight);
+    analogWrite(10,(uint8_t)OutputLeft);
 }
