@@ -1,8 +1,9 @@
 
-uint8_t LeftSpeed=100;
-uint8_t RightSpeed=100;
+
+
 #include "SpeedModify.h"
 #include "move.h"
+#include "PID.h"
 /*
 A是右轮
 B是左轮更弱
@@ -15,7 +16,7 @@ void setup() {
   setupSpeedTest();
   Serial.begin(9600);
   motorInit();
-  //TODO: modulize the initilization of the motor
+  PID_setup();
 }
 /*
 [REC]119 w
@@ -30,6 +31,8 @@ void setup() {
 [REC]97 a
 
 */
+int speed = 0;
+int direction = 0;
 
 void loop() {
   // put your main code here, to run repeatedly:  
@@ -37,12 +40,9 @@ void loop() {
   int Receive_Data;
   unsigned long currentTime,startTime;
 
-
   while(Serial.available()){
-    checkCurrentSpeed();
     int inByte = Serial.read();
-    int direction;
-    int speed = 4;
+    
     //Receive_Data = (char)inByte;
     Receive_Data = inByte;
     Serial.println(Receive_Data);
@@ -72,9 +72,13 @@ void loop() {
     }
  
    }
-   else if(Receive_Data>48 && Receive_Data<58){
-      speed = Receive_Data-49;
+   else if(Receive_Data>=48 && Receive_Data<58){
+      speed = Receive_Data-48;
    }
    move(direction,speed,0);//move the car with the direction and speed forever
+
  }
+  if ((direction ==0 ||direction == 1)&& speed != 0){
+    adjustSpeed();//adjust the speed of the car only if the command is to move forward or backward
+  }
 }
