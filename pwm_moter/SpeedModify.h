@@ -1,5 +1,6 @@
 #ifndef GETSPEED_H
 #define GETSPEED_H
+#include "move.h"
 #include <MsTimer2.h>
 
 #include <PinChangeInterrupt.h>
@@ -7,6 +8,7 @@
 #include <PinChangeInterruptPins.h>
 #include <PinChangeInterruptSettings.h>
 
+#include <PID_v1.h>
 
 volatile unsigned long rightCount = 0;
 volatile unsigned long leftCount = 0;
@@ -24,6 +26,8 @@ void getSpeed()
 {
   // rightSpeed = rightCount*10/PULSES_PER_REVOLUTION*PI*WHEEL_DIAMETER;
   // leftSpeed = leftCount*10/PULSES_PER_REVOLUTION*PI*WHEEL_DIAMETER;
+  leftSpeed = leftCount;
+  rightSpeed = rightCount;
 
   Serial.print("leftSpeed:");
   Serial.print(leftCount);
@@ -55,5 +59,6 @@ void setupSpeedTest() {
   attachInterrupt(digitalPinToInterrupt(RIGHTSPD), countRightPulses, RISING);
 
 }
+
 
 #endif

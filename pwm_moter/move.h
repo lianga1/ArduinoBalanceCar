@@ -26,7 +26,6 @@
 #define right(speed) LeftForward();RightStop();analogWrite(PWMLeft,speed)
 
 
-
 void move(uint8_t direction,uint8_t speed, uint8_t time);
 void motorInit();
 /*
