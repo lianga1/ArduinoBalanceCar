@@ -28,6 +28,12 @@ void adjustSpeed()
     myPIDLeft.Compute();
 
     // 输出到PWM
+<<<<<<< HEAD
+    analogWrite(9, OutputRight);
+    analogWrite(10, OutputLeft);
+}
+=======
     analogWrite(9, (uint8_t)OutputRight);
     analogWrite(10,(uint8_t)OutputLeft);
 }
+>>>>>>> f86e912f036985ab226831233edb4cfdbdb3120e

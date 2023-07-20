@@ -1,3 +1,7 @@
+#include <PID_v1.h>
+
+#include <MPU6050.h>
+
 #ifndef GETSPEED_H
 #define GETSPEED_H
 #include "move.h"
