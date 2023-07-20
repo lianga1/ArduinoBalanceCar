@@ -14,8 +14,8 @@ volatile unsigned long rightCount = 0;
 volatile unsigned long leftCount = 0;
 volatile unsigned long rightSpeed = 0;
 volatile unsigned long leftSpeed = 0;
-#define LEFTSPD 2
-#define RIGHTSPD 3
+#define LEFTSPD 4
+#define RIGHTSPD 5
 
 /*definations of the constants for the wheel and the encoder*/
 #define WHEEL_DIAMETER 6.5 // centimeters
@@ -29,12 +29,13 @@ void getSpeed()
   leftSpeed = leftCount;
   rightSpeed = rightCount;
 
-  Serial.print("leftSpeed:");
-  Serial.print(leftCount);
-  Serial.println("pulses");
-  Serial.print("rightSpeed:");
-  Serial.print(rightCount);
-  Serial.println("pulses");
+  //Serial.print("leftSpeed:");
+  //Serial.print(leftCount);
+  //Serial.println("pulses");
+  //Serial.print("rightSpeed:");
+  //Serial.print(",");
+  //Serial.print(rightCount);
+  //Serial.println("pulses");
   rightCount = 0;
   leftCount = 0;
 
@@ -55,9 +56,9 @@ void setupSpeedTest() {
   
    MsTimer2::set(100, getSpeed);//set the timer interrupt, 100ms
    MsTimer2::start();//start the timer
-  attachInterrupt(digitalPinToInterrupt(LEFTSPD), countLeftPulses, RISING);
-  attachInterrupt(digitalPinToInterrupt(RIGHTSPD), countRightPulses, RISING);
-
+  attachPCINT(digitalPinToPCINT(LEFTSPD), countLeftPulses, RISING);
+  attachPCINT(digitalPinToPCINT(RIGHTSPD), countRightPulses, RISING);
+  
 }
 
 

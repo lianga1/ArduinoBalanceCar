@@ -1,8 +1,8 @@
 #ifndef _MOVE_H
 #define _MOVE_H
 #include <stdint.h>
-#define PWMLeft 9
-#define PWMRight 10
+#define PWMLeft 10
+#define PWMRight 9
 #define RightIn1 7
 #define RightIn2 6
 #define LeftIn1 12
@@ -19,7 +19,7 @@
 #define LeftStop() digitalWrite(LeftIn1,LOW);digitalWrite(LeftIn2,LOW)
 #define RightStop() digitalWrite(RightIn1,LOW);digitalWrite(RightIn2,LOW)
 //definations of the fuctions to control the car
-#define stop() LeftStop();RightStop()
+#define Stop() LeftStop();RightStop()
 #define forward(speed) LeftForward();RightForward();analogWrite(PWMLeft,speed);analogWrite(PWMRight,speed)
 #define backward(speed) LeftBackward();RightBackward();analogWrite(PWMLeft,speed);analogWrite(PWMRight,speed)
 #define left(speed) LeftStop();RightForward();analogWrite(PWMRight,speed)
@@ -36,7 +36,7 @@ Description: a move function
 */
 void move(uint8_t direction,uint8_t speed, uint8_t time){
     if (speed ==0){
-        stop();
+        Stop();
         return;
     }
     speed = 90 + speed*10;
@@ -54,12 +54,12 @@ void move(uint8_t direction,uint8_t speed, uint8_t time){
             right(speed);
             break;
         default:
-            stop();
+            Stop();
             break;
     }
     if(time!=0){
         delay(time);
-        stop();
+        Stop();
     }
 
 }
@@ -71,6 +71,6 @@ void motorInit(){
     pinMode(LeftIn2,OUTPUT);
     pinMode(RightIn1,OUTPUT);
     pinMode(RightIn2,OUTPUT);
-    stop();
+    Stop();
 }
 #endif
