@@ -4,7 +4,7 @@
 double Setpoint=100;
 double InputRight, InputLeft;
 double OutputRight, OutputLeft;
-double Kp=2, Ki=5, Kd=1;
+double Kp=1, Ki=0.006, Kd=0.01;
 PID myPIDRight(&InputRight, &OutputRight, &Setpoint, Kp, Ki, Kd, DIRECT);
 PID myPIDLeft(&InputLeft, &OutputLeft, &Setpoint, Kp, Ki, Kd, DIRECT);
 /*setup the pid interface*/
@@ -12,8 +12,8 @@ void PID_setup()
 {
     myPIDLeft.SetMode(AUTOMATIC);
     myPIDRight.SetMode(AUTOMATIC);
-    myPIDLeft.SetSampleTime(10);
-    myPIDRight.SetSampleTime(10);
+    myPIDRight.SetSampleTime(100);
+    myPIDLeft.SetSampleTime(100);
     myPIDLeft.SetOutputLimits(0, 255);
     myPIDRight.SetOutputLimits(0, 255);
 }
@@ -28,6 +28,14 @@ void adjustSpeed()
     myPIDLeft.Compute();
 
     // 输出到PWM
-    analogWrite(9, (uint8_t)OutputRight);
-    analogWrite(10,(uint8_t)OutputLeft);
+//    Serial.print(InputRight);
+//    Serial.print(",");
+//    Serial.println(InputLeft);
+//    Serial.print(",");
+//    Serial.print(OutputRight);
+//    Serial.print(",");
+//    Serial.println(OutputLeft);
+ 
+    analogWrite(9, OutputRight);
+    analogWrite(10, OutputLeft);
 }
