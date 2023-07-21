@@ -33,12 +33,12 @@ void getSpeed()
   leftSpeed = leftCount;
   rightSpeed = rightCount;
 
-  Serial.print("leftSpeed:");
-  Serial.print(leftCount);
-  Serial.println("pulses");
-  Serial.print("rightSpeed:");
-  Serial.print(rightCount);
-  Serial.println("pulses");
+//  Serial.print("leftSpeed:");
+//  Serial.print(leftCount);
+//  Serial.println("pulses");
+//  Serial.print("rightSpeed:");
+//  Serial.print(rightCount);
+//  Serial.println("pulses");
   rightCount = 0;
   leftCount = 0;
 

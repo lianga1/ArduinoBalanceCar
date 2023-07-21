@@ -4,7 +4,7 @@
 double Setpoint=100;
 double InputRight, InputLeft;
 double OutputRight, OutputLeft;
-double Kp=2, Ki=5, Kd=1;
+double Kp=1, Ki=0.006, Kd=0.01;
 PID myPIDRight(&InputRight, &OutputRight, &Setpoint, Kp, Ki, Kd, DIRECT);
 PID myPIDLeft(&InputLeft, &OutputLeft, &Setpoint, Kp, Ki, Kd, DIRECT);
 /*setup the pid interface*/
@@ -28,12 +28,22 @@ void adjustSpeed()
     myPIDLeft.Compute();
 
     // 输出到PWM
-<<<<<<< HEAD
-    analogWrite(9, OutputRight);
-    analogWrite(10, OutputLeft);
+    analogWrite(9, (uint8_t)OutputLeft);
+    analogWrite(10,(uint8_t)OutputRight);
 }
-=======
-    analogWrite(9, (uint8_t)OutputRight);
-    analogWrite(10,(uint8_t)OutputLeft);
+void adjustTurnLeft(){
+    InputRight = rightSpeed;
+
+    // 计算PID控制器的输出
+    myPIDRight.Compute();
+
+    // 输出到PWM
+    analogWrite(10,(uint8_t)OutputRight);
+
 }
->>>>>>> f86e912f036985ab226831233edb4cfdbdb3120e
+void adjustTurnRight(){
+    InputLeft = leftSpeed;
+    myPIDLeft.Compute();
+    analogWrite(9, (uint8_t)OutputLeft);
+
+}

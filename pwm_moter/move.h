@@ -12,8 +12,8 @@
 #define LOW 0
 #define OUTPUT 1
 //definations of the fuctions to control the motors
-#define LeftForward() digitalWrite(LeftIn1,HIGH);digitalWrite(LeftIn2,LOW)
-#define LeftBackward() digitalWrite(LeftIn1,LOW);digitalWrite(LeftIn2,HIGH)
+#define LeftForward() digitalWrite(LeftIn1,LOW);digitalWrite(LeftIn2,HIGH)
+#define LeftBackward() digitalWrite(LeftIn1,HIGH);digitalWrite(LeftIn2,LOW)
 #define RightForward() digitalWrite(RightIn1,LOW);digitalWrite(RightIn2,HIGH)
 #define RightBackward() digitalWrite(RightIn1,HIGH);digitalWrite(RightIn2,LOW)
 #define LeftStop() digitalWrite(LeftIn1,LOW);digitalWrite(LeftIn2,LOW)
