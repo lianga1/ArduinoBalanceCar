@@ -1,6 +1,7 @@
 #include "move.h"
 #include "PID.h"
 #include "SpeedModify.h"
+#include "Mpu6050.h"
 
 void setup() {
   // put your setup code here, to run once:
@@ -8,6 +9,7 @@ void setup() {
   Serial.begin(9600);
   motorInit();
   PID_setup();
+  Mpu2setup();
 }
 
 int direction = 0;
@@ -53,5 +55,7 @@ void loop(){
     if((direction ==0|| direction ==1) && speed!=0){
       adjustSpeed();
     }
+    //displayReadings();
+    yprget();
     
 }

@@ -1,3 +1,7 @@
+#include <PID_v1.h>
+
+#include <MPU6050.h>
+
 #ifndef GETSPEED_H
 #define GETSPEED_H
 #include "move.h"
@@ -29,12 +33,12 @@ void getSpeed()
   leftSpeed = leftCount;
   rightSpeed = rightCount;
 
-  Serial.print("leftSpeed:");
-  Serial.print(leftCount);
-  Serial.println("pulses");
-  Serial.print("rightSpeed:");
-  Serial.print(rightCount);
-  Serial.println("pulses");
+//  Serial.print("leftSpeed:");
+//  Serial.print(leftCount);
+//  Serial.println("pulses");
+//  Serial.print("rightSpeed:");
+//  Serial.print(rightCount);
+//  Serial.println("pulses");
   rightCount = 0;
   leftCount = 0;
 

@@ -12,14 +12,14 @@
 #define LOW 0
 #define OUTPUT 1
 //definations of the fuctions to control the motors
-#define LeftForward() digitalWrite(LeftIn1,HIGH);digitalWrite(LeftIn2,LOW)
-#define LeftBackward() digitalWrite(LeftIn1,LOW);digitalWrite(LeftIn2,HIGH)
+#define LeftForward() digitalWrite(LeftIn1,LOW);digitalWrite(LeftIn2,HIGH)
+#define LeftBackward() digitalWrite(LeftIn1,HIGH);digitalWrite(LeftIn2,LOW)
 #define RightForward() digitalWrite(RightIn1,LOW);digitalWrite(RightIn2,HIGH)
 #define RightBackward() digitalWrite(RightIn1,HIGH);digitalWrite(RightIn2,LOW)
 #define LeftStop() digitalWrite(LeftIn1,LOW);digitalWrite(LeftIn2,LOW)
 #define RightStop() digitalWrite(RightIn1,LOW);digitalWrite(RightIn2,LOW)
 //definations of the fuctions to control the car
-#define stop() LeftStop();RightStop()
+#define Stop() LeftStop();RightStop()
 #define forward(speed) LeftForward();RightForward();analogWrite(PWMLeft,speed);analogWrite(PWMRight,speed)
 #define backward(speed) LeftBackward();RightBackward();analogWrite(PWMLeft,speed);analogWrite(PWMRight,speed)
 #define left(speed) LeftStop();RightForward();analogWrite(PWMRight,speed)
@@ -36,10 +36,11 @@ Description: a move function
 */
 void move(uint8_t direction,uint8_t speed, uint8_t time){
     if (speed ==0){
-        stop();
+        Stop();
         return;
     }
     speed = 90 + speed*10;
+    Serial.print('hello');
     switch(direction){
         case 0:
             forward(speed);
@@ -54,12 +55,12 @@ void move(uint8_t direction,uint8_t speed, uint8_t time){
             right(speed);
             break;
         default:
-            stop();
+            Stop();
             break;
     }
     if(time!=0){
         delay(time);
-        stop();
+        Stop();
     }
 
 }
@@ -71,6 +72,6 @@ void motorInit(){
     pinMode(LeftIn2,OUTPUT);
     pinMode(RightIn1,OUTPUT);
     pinMode(RightIn2,OUTPUT);
-    stop();
+    Stop();
 }
 #endif

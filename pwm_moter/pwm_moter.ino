@@ -31,7 +31,7 @@ void setup() {
 [REC]97 a
 
 */
-int speed = 0;
+int speed = 3;
 int direction = 0;
 
 void loop() {
@@ -39,13 +39,16 @@ void loop() {
   //static unsigned char Receive_Data;
   int Receive_Data;
   unsigned long currentTime,startTime;
-
+  Serial.print(leftSpeed);
+  Serial.print(",");
+  Serial.println(rightSpeed);
+  
   while(Serial.available()){
     int inByte = Serial.read();
     
     //Receive_Data = (char)inByte;
     Receive_Data = inByte;
-    Serial.println(Receive_Data);
+//    Serial.println(Receive_Data);
     //if (Receive_Data==(char)'w'){
    if(Receive_Data>90){
     switch (Receive_Data)
@@ -72,13 +75,19 @@ void loop() {
     }
  
    }
-   else if(Receive_Data>=48 && Receive_Data<58){
-      speed = Receive_Data-48;
-   }
+//   else if(Receive_Data>=48 && Receive_Data<58){
+//      speed = Receive_Data-48;
+//   }
    move(direction,speed,0);//move the car with the direction and speed forever
 
  }
   if ((direction ==0 ||direction == 1)&& speed != 0){
     adjustSpeed();//adjust the speed of the car only if the command is to move forward or backward
+  }
+  else if(direction = 2){
+    adjustTurnLeft();
+  }
+  else if(direction = 3){
+    adjustTurnRight();
   }
 }
