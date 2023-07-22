@@ -1,5 +1,5 @@
 #include <PID_v1.h>
-#include "SpeedModify.h"
+#include "GetSpeed.h"
 
 double Setpoint=100;
 double InputRight, InputLeft;

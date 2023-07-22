@@ -2,16 +2,16 @@
    作者：lzn,tpl,azq
    产品名称：ArduinoCar
 ****************************************************************************/
-#include "SpeedModify.h"
-#include "move.h"
+#include "GetSpeed.h"
+#include "Move.h"
 #include "PID.h"
 int speed = 1;
 int direction = 0;
 
 void setup() {
   Serial.begin(9600);
-  Stop();
   //setupSpeedTest();
+  //Stop();
   //motorInit();
   //PID_setup();
 }
@@ -37,8 +37,21 @@ void loop() {
     }else if (Receive_Data=='e'){
       Serial.println("5STOP");
       direction = 4;
+    }else if (Receive_Data=='i'){
+      Serial.println("6 SPEED-1");
+      if(speed = 80 + speed*10>0){
+      speed = speed - 1;
+      }else{speed = -8;}
+      //初值90,每次加10,最低0,则可以减9次,防溢出
+    }else if (Receive_Data=='j'){
+      Serial.println("7 SPEED+1");
+      if(speed = 80 + speed*10<250){
+      speed = speed + 1;}
+      else{speed = 16;}
+      //初值90，每次加10，最高255，则可以加16次,防溢出
     }
     move(direction,speed,0);
+    //getSpeed();
   }
 }
 
