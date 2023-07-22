@@ -7,10 +7,6 @@
 #define RightIn2 6
 #define LeftIn1 12
 #define LeftIn2 13
-
-#define HIGH 1
-#define LOW 0
-#define OUTPUT 1
 //definations of the fuctions to control the motors
 #define LeftForward() digitalWrite(LeftIn1,LOW);digitalWrite(LeftIn2,HIGH)
 #define LeftBackward() digitalWrite(LeftIn1,HIGH);digitalWrite(LeftIn2,LOW)
@@ -20,17 +16,25 @@
 #define RightStop() digitalWrite(RightIn1,LOW);digitalWrite(RightIn2,LOW)
 //definations of the fuctions to control the car
 #define Stop() LeftStop();RightStop()
+//modify the mode by commenting the code
+//mode 1 : one go, one stop
+// #define forward(speed) LeftForward();RightForward();analogWrite(PWMLeft,speed);analogWrite(PWMRight,speed)
+// #define backward(speed) LeftBackward();RightBackward();analogWrite(PWMLeft,speed);analogWrite(PWMRight,speed)
+// #define left(speed) LeftStop();RightForward();analogWrite(PWMRight,speed)
+// #define right(speed) LeftForward();RightStop();analogWrite(PWMLeft,speed)
+//mode 2 : one speed is less then the other
 #define forward(speed) LeftForward();RightForward();analogWrite(PWMLeft,speed);analogWrite(PWMRight,speed)
 #define backward(speed) LeftBackward();RightBackward();analogWrite(PWMLeft,speed);analogWrite(PWMRight,speed)
-#define left(speed) LeftStop();RightForward();analogWrite(PWMRight,speed)
-#define right(speed) LeftForward();RightStop();analogWrite(PWMLeft,speed)
+#define left(speed) LeftForward();RightForward();analogWrite(PWMLeft,speed-15);analogWrite(PWMRight,speed)
+#define right(speed) LeftForward();RightForward();analogWrite(PWMRight,speed-15);analogWrite(PWMLeft,speed)
+
 
 
 void move(uint8_t direction,uint8_t speed, uint8_t time);
 void motorInit();
 /*
 Description: a move function
-@param: direction: 0:forward 1:backward 2:left 3:right
+@param: direction: 0:forward 1:backward 2:left 3:right 4:stop
 @param: speed: 0~50
 @param: time: 0~255,if time=0, then move forever
 */
@@ -39,8 +43,8 @@ void move(uint8_t direction,uint8_t speed, uint8_t time){
         Stop();
         return;
     }
-    speed = 90 + speed*10;
-    Serial.print('hello');
+    speed = 80 + speed*10;
+    //Serial.print('hello');
     switch(direction){
         case 0:
             forward(speed);
@@ -54,7 +58,7 @@ void move(uint8_t direction,uint8_t speed, uint8_t time){
         case 3:
             right(speed);
             break;
-        default:
+        case 4:
             Stop();
             break;
     }
