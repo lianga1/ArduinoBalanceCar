@@ -37,10 +37,10 @@ Description: a move function
 @param: time: 0~255,if time=0, then move forever
 */
 void move(uint8_t direction,uint8_t speed, uint8_t time){
-    if (speed ==0){
-        Stop();
-        return;
-    }
+    // if (speed ==0){
+    //     Stop();
+    //     return;
+    // }
     speed = 80 + speed*10;
     //Serial.print('hello');
     switch(direction){

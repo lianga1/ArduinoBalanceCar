@@ -37,20 +37,23 @@ void loop() {
     }else if (Receive_Data=='e'){
       Serial.println("5STOP");
       direction = 4;
-    }else if (Receive_Data=='i'){
+    }
+    
+    else if (Receive_Data=='i'){
       Serial.println("6 SPEED-1");
-      if(speed = 80 + speed*10>0){
+     if(speed>-8){
       speed = speed - 1;
       }else{speed = -8;}
-      //初值90,每次加10,最低0,则可以减9次,防溢出
+      //初值80+10*1,每次减10,最低0,则可以减9次,防溢出
     }else if (Receive_Data=='j'){
       Serial.println("7 SPEED+1");
-      if(speed = 80 + speed*10<250){
+      if(speed<16){
       speed = speed + 1;}
       else{speed = 16;}
       //初值90，每次加10，最高255，则可以加16次,防溢出
     }
     move(direction,speed,0);
+    Serial.println(speed);
     //getSpeed();
   }
 }
