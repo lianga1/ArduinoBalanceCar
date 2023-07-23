@@ -1,7 +1,7 @@
 #include <PID_v1.h>
 #include "SpeedModify.h"
 
-double Setpoint=100;
+double Setpoint=300;
 double InputRight, InputLeft;
 double OutputRight, OutputLeft;
 double Kp=1, Ki=0.006, Kd=0.01;

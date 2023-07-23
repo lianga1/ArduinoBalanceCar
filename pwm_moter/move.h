@@ -40,7 +40,7 @@ void move(uint8_t direction,uint8_t speed, uint8_t time){
         return;
     }
     speed = 90 + speed*10;
-    Serial.print('hello');
+
     switch(direction){
         case 0:
             forward(speed);
