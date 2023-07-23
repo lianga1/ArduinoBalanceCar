@@ -4,9 +4,11 @@ an balance dual-wheel car driven by arduino uno
 ## Modules
 - [x] Motor Driver
 - [x] Speed Monitor
-- [ ] UART Communication
+- [x] UART Communication
 - [x] Bluetooth Controller
-- [ ] PID Control
+- [x] PID Control for speed
+- [ ] PID Control for balance
+- [ ] trace the line
 ## Motor Driver
 packaged with a function move that takes a speed , a direction and a time as parameters
 ## main loop
