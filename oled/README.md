@@ -6,7 +6,7 @@ arduino:GND, 3v3, 13, 11, 8, 9,10
 
 ref: https://www.cnblogs.com/gooutlook/p/11773966.html
 
-spi Require Library:
+spi require library:
 
 Adafruit_SSD1306
 
