@@ -18,7 +18,7 @@ Can input with bluetooth controller or serial monitor, input wasd for direction 
 Can output the speed of the motor to serial monitor.
 What's more , you can get the speed by the variable 'rightSpeed' and 'leftSpeed'.
 ## Speed Monitor
-display with 'oled and arduino' or 'oled and esp32' 
+Display with 'oled and arduino' or 'oled and esp32' 
 # Required Libraries
 * MsTimer2
 * PinChangeInterrupt
