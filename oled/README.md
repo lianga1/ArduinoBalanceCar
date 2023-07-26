@@ -20,3 +20,15 @@ require: PCtoLCD2002 取模生成汉字 ref: https://blog.csdn.net/smallredhat01
 
 code ref: https://blog.csdn.net/a_52hz/article/details/100136496
 
+2.esp32
+
+OLED: GND, VCC, D0, D1, RES, DC, CS
+
+esp32:GND, 3v3, D14, D13, D5, D4, D15
+
+code ref: http://micropython.com.cn/en/latet/esp8266/tutorial/ssd1306.html
+
+硬spi
+
+require: ss1306.py
+
