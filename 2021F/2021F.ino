@@ -73,6 +73,14 @@ void loop()
                 direction = 7;
                 move(7,1,100);
                 break;
+            case 'f':
+                Serial.println("8return");
+                direction = 8;
+                move(8,1,500);
+                Stop();
+                delay(500);
+                move(8,1,500);
+                break;
  
         }
     }

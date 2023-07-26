@@ -66,6 +66,9 @@ void move(uint8_t direction,uint8_t speed, uint8_t time){
         case 7:
             rightForward(speed);
             break;
+        case 8:
+            backward(speed);
+            break;
         default:
             break;
     }
