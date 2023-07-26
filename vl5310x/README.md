@@ -2,7 +2,11 @@ VL53L0X最远测距的距离是2m，精度可以是2mm
 
 原理:发射激光到反射物，激光折射回来给接收元件，然后VL53L0X内部计算出时间和距离后打印
 
-1.Vl53L0X_arduino.ino
+1.VL53L0X_arduino.ino
+
+VL5310X: VIN, GND, SCL, SDA
+
+arduino: 3.3V, GND, SCL, SDA
 
 可以在Arduino串口绘图仪显示测距图像，经过延时100ms后图像更加清晰易辨认
 
