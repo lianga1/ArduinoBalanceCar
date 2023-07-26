@@ -7,3 +7,5 @@ ref: https://cloud.tencent.com/developer/article/1761137
 require library:
 https://github.com/DFRobot/DFRobot_VL53L0X
 or download from arduino library by searching DFRobot_VL53L0X
+
+stm32: https://blog.csdn.net/tiramisu_L/article/details/89502121
