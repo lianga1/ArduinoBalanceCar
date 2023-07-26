@@ -4,6 +4,7 @@
 
 void setup(){
     Serial.begin(9600);
+    Serial.setTimeout(20);
     motorInit();
     setupSpeedTest();
     PID_setup();
@@ -29,7 +30,8 @@ void loop()
 {
     while(Serial.available())
     {
-        char Receive_Data = Serial.read();
+        String str = Serial.readString();
+        char Receive_Data = str[0];
         switch (Receive_Data)
         {
             case 'a':
@@ -71,10 +73,11 @@ void loop()
                 direction = 7;
                 move(7,1,100);
                 break;
-
+ 
         }
     }
         if(direction == 1)adjustSpeed();
+        if(direction == 5)adjustStop();
         // else if (Receive_Data=='i'){
         //     Serial.println("6 SPEED-1");
         //     if(speed>-8){

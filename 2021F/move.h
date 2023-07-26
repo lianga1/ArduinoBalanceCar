@@ -27,8 +27,8 @@
 #define backward(speed) LeftBackward();RightBackward();analogWrite(PWMLeft,speed);analogWrite(PWMRight,speed)
 #define left(speed) LeftBackward();RightForward();analogWrite(PWMLeft,speed);analogWrite(PWMRight,speed)
 #define right(speed) LeftForward();RightBackward();analogWrite(PWMRight,speed);analogWrite(PWMLeft,speed)
-#define leftForward(speed) LeftForward();RightForward();analogWrite(PWMLeft,speed-15);analogWrite(PWMRight,speed)
-#define rightForward(speed) LeftForward();RightForward();analogWrite(PWMRight,speed-15);analogWrite(PWMLeft,speed)
+#define leftForward(speed) LeftForward();RightForward();analogWrite(PWMLeft,speed-30);analogWrite(PWMRight,speed-15)
+#define rightForward(speed) LeftForward();RightForward();analogWrite(PWMRight,speed-30);analogWrite(PWMLeft,speed-15)
 void move(uint8_t direction,uint8_t speed, uint8_t time);
 void motorInit();
 /*
