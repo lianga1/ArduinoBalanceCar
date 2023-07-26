@@ -10,3 +10,7 @@ Require Library:
 Adafruit_SSD1306
 
 Adafruit_GFX
+
+1.oled.ino 显示-LEO-
+
+2.oled_a_piece_of_cake.ino 显示中文"小菜一碟"
