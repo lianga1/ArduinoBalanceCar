@@ -11,7 +11,7 @@ class Number_recognition:
             "input0": (224, 224, 3)
         },
         "outputs": {
-            "output0": (7, 7, (1+4+len(labels))*5)
+            "output0": (7, 7, (1+4+len(labels))*6)
         },
         "mean": [127.5, 127.5, 127.5],
         "norm": [0.0078125, 0.0078125, 0.0078125],
@@ -115,6 +115,11 @@ def getnum():#最最开始的时候扫描得到的目标病房号
 
 
 def firstcross(aim):
+    for i in range(3):
+        uart.write(b'a')
+        time.sleep(0.05)
+    uart.write(b'e')
+    time.sleep(0.05)
     if aim == 1:
         uart.write(b'd')
         time.sleep(0.05)
@@ -122,14 +127,8 @@ def firstcross(aim):
         time.sleep(0.05)
         uart.write(b'd')
         time.sleep(0.05)
-        uart.write(b'd')
-        time.sleep(0.05)
-        uart.write(b'd')
-        time.sleep(0.05)
-        uart.write(b'd')
-        time.sleep(0.05)
-        uart.write(b'd')
-        time.sleep(0.05)
+
+
     if aim == 2:
         uart.write(b'c')
         time.sleep(0.05)
@@ -185,7 +184,7 @@ dat = gpio(pin("PH", 13), line_request.DIRECTION_INPUT)
 
 aim =0
 while aim == 0:
-    aim = getnum()
+    aim = int(getnum())
 
 crosstimes = 0
 while True:
@@ -236,6 +235,7 @@ while True:
         else:
             #倒退几秒钟
             #secondthirdcross(aim)
+            #TODO:第二次第三次交叉口的判断,并且倒退几秒钟，得到数量正确的数字并排序
             uart.write(b'e')
             time.sleep(0.01)
 
