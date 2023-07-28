@@ -4,7 +4,7 @@
 #define PWMLeft 9
 #define PWMRight 10
 #define RightIn1 7
-#define RightIn2 6
+#define RightIn2 4
 #define LeftIn1 12
 #define LeftIn2 13
 //definations of the fuctions to control the motors

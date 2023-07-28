@@ -136,6 +136,15 @@ def firstcross(aim):
 
 
 def secondthirdcross(aim):  # 以后反复数字、位置，判断是否有目标病房，如果有记下左右
+    # go back
+    # turn left to scan the number
+    #confirm get 1 or 2 picture
+    # go back again
+    # turn right to main road
+    # go back again
+    # turn right to scan
+    # con
+    
     img = camera.capture()
     AI_img = img.copy().resize(224, 224)
     out = number_recognition.m.forward(AI_img.tobytes(), quantize=True, layout="hwc")
