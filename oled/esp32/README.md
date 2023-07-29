@@ -8,4 +8,5 @@ ref: http://micropython.com.cn/en/latet/esp8266/tutorial/ssd1306.html
 
 require: ss1306.py
 
+2.font_ssd1306_supportChinese.py
 
